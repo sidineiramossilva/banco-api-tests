@@ -15,5 +15,16 @@ describe('Login', () => {
             expect(resposta.status).to.equal(200);
             expect(resposta.body.token).to.be.a('string');
         })
+
+        it('Deve retornar 400 quando parametros de login ausentes', async () => {
+            const bodyLogin = { ...postLogin}
+            bodyLogin.username = ''
+            
+            const resposta = await request(process.env.BASE_URL)
+                .post('/login')
+                .set('Content-Type', 'application/json')
+                .send(bodyLogin)            
+            expect(resposta.status).to.equal(400);
+        })
     })
 })
